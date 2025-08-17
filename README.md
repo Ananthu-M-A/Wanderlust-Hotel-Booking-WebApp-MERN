@@ -1,27 +1,62 @@
 # Wanderlust: Hotel & Restaurant Booking App
 
-## Welcome!
+> A streamlined reservation platform.
 
-Welcome to our **Wanderlust: Hotel & Restaurant Booking App**! This dynamic platform allows users to easily find and book accommodations and dining experiences. Whether you’re planning a stay or a special night out, our app provides a seamless way to make reservations and enjoy top-notch service.
+![build](https://img.shields.io/badge/build-passing-brightgreen) ![license](https://img.shields.io/badge/license-Proprietary-blue)
 
-## Key Features
+## About
 
-- **Hotel Reservations**: Search, filter, and book hotel rooms from a variety of options. View detailed descriptions, images, and reviews to make informed decisions.
-- **Restaurant Bookings**: Discover local restaurants, check availability, and secure your table effortlessly.
-- **User Account Management**: Create and manage your account, view booking history, and update personal details.
-- **Secure Payment**: Enjoy a hassle-free checkout process with integrated payment gateways ensuring your transactions are safe and secure.
-- **Real-Time Availability**: Check room and table availability in real-time to plan your stay or dining experience with confidence.
-- **Chatbot**: A new different and interesting booking experience using chatbot.
-- **Live Chat**: Live chat service for every complications related to booking.
+Wanderlust is a dynamic platform for easily booking hotels and restaurants.  It provides a seamless reservation experience for both accommodations and dining.
 
-## Technologies
+## Table of Contents
 
-- **Frontend**: React.js, TypeScript, tailwind CSS for a modern and user-friendly interface
-- **Backend**: Node.js, Express.js, and MongoDB to support robust data handling and scalability
-- **Payment Integration**: Stripe for secure and efficient transactions
-- **Authentication**: JWT, crypto and bcrypt for secure and reliable user authentication
-- **Chatbot Integration**: React Chatbotify provides you with a fast and easy booking experience
-- **Live Chat Integration**: Best live service with Socket.IO
-- **Other Technologies**: Multer, Cloudinary, Pdf Kit, Google Maps & ChartJS all together provides you a greater experience.
+- [About](#about)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [License](#license)
+- [Author](#author)
 
-#### Getting Started...!!!
+## Features
+
+- Hotel and Restaurant Reservations
+- User Account Management
+- Secure Payment Processing
+- Real-time Availability
+- Chatbot Support
+- Live Chat Support
+- Search, Filter, and Sort Functionality
+
+## Tech Stack
+
+- **Frontend:** React.js, TypeScript, Tailwind CSS
+- **Backend:** Node.js, Express.js, MongoDB
+- **Payment:** Stripe
+- **Authentication:** JWT, Crypto, Bcrypt
+- **Chatbot:** React Chatbotify
+- **Live Chat:** Socket.IO
+- **Other:** Multer, Cloudinary, PDFKit, Google Maps, Chart.js
+
+## Getting Started
+
+1. Clone the repository.
+2. Copy the `.env.example` file to `.env` and configure the environment variables.
+3. Run `npm install` to install dependencies.
+
+
+## Usage
+
+Start the backend with `npm run start` and the frontend with `npm run dev`.
+
+## License
+
+This project is licensed under a proprietary license.  Distribution or modification without explicit permission from the author is prohibited.  Contact the author for licensing inquiries.
+
+## Author
+
+**Ananthu M A**
+
+- GitHub: [Ananthu-M-A](https://github.com/Ananthu-M-A)
+- Portfolio: [https://ananthuma.com](https://ananthuma.com)
+- Email: ananthumapookkad@gmail.com
