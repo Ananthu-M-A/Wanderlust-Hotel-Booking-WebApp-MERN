@@ -5,7 +5,7 @@ const Footer = () => {
                 <img src="/logonobg2.png" style={{ height: "50px" }} alt="" />
             </div>
             <div className="container mx-auto flex justify-center items-center">
-                <p className="text-black text-sm">&copy; 2024 Wanderlust. Powered by Smart-Depot. All rights reserved.</p>
+                <p className="text-black text-sm">Copyright © 2025 Ananthu M A. All rights reserved.</p>
             </div>
         </div>
     );
