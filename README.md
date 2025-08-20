@@ -2,7 +2,7 @@
 
 > A streamlined reservation platform.
 
-![build](https://img.shields.io/badge/build-passing-brightgreen) ![license](https://img.shields.io/badge/license-Proprietary-blue)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Ananthu-M-A/Wanderlust-Hotel-Booking-WebApp-MERN)](https://github.com/Ananthu-M-A/Wanderlust-Hotel-Booking-WebApp-MERN/releases) ![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg) 
 
 ## About
 
@@ -51,7 +51,7 @@ Start the backend with `npm run start` and the frontend with `npm run dev`.
 
 ## License
 
-This project is licensed under a proprietary license.  Distribution or modification without explicit permission from the author is prohibited.  Contact the author for licensing inquiries.
+This project is licensed under the [Apache License 2.0](LICENSE).
 
 ## Author
 
@@ -60,3 +60,4 @@ This project is licensed under a proprietary license.  Distribution or modificat
 - GitHub: [Ananthu-M-A](https://github.com/Ananthu-M-A)
 - Portfolio: [https://ananthuma.com](https://ananthuma.com)
 - Email: ananthumapookkad@gmail.com
+
