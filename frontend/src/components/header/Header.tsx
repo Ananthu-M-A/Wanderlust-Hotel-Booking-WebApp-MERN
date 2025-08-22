@@ -1,8 +1,12 @@
 import { Link, NavLink } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from '../../contexts/AppContext';
 import { useAdminContext } from '../../contexts/AdminContext';
 import { useEffect, useState } from 'react';
+import { useThemeContext } from '../../contexts/ThemeContext';
+import { IconButton, Tooltip } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import '../../index.css';
 import LogoutButton from './LogoutButton';
 import * as apiClient from '../../api-client';
@@ -11,7 +15,10 @@ const Header = () => {
   const { isLoggedIn } = useAppContext();
   const { isAdminLoggedIn } = useAdminContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { data: user } = useQuery("loadAccount", apiClient.loadAccount);
+  const { data: user } = useQuery({
+    queryKey: ["loadAccount"],
+    queryFn: apiClient.loadAccount
+  });
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -20,8 +27,9 @@ const Header = () => {
   useEffect(() => { }, [user]);
   const activeClassNameProp = { activeClassName: "active-link" };
 
+  const { mode, toggleMode } = useThemeContext();
   return (
-    <div className="bg-gray-200 py-4 top-0 z-50">
+    <div className={mode === 'dark' ? 'bg-gray-900 py-4 top-0 z-50' : 'bg-gray-200 py-4 top-0 z-50'}>
       <div className="container mx-auto flex justify-between items-center flex-wrap">
         <Link to="/search" className="text-3xl font-bold tracking-tight mb-4 md:mb-0">
           <img src="/logonobg2.png" style={{ height: "35px" }} alt="" />
@@ -37,9 +45,6 @@ const Header = () => {
                     <img src="/drop-down-arrow2.png" alt="Toggle filter visibility" />
                   </button>
                 </h3>
-                {/* <button className='px-4 py-2 cursor-pointer text-black font-semibold hover:bg-gray-100' onClick={handleDropdownToggle}>
-                  Dashboard
-                </button> */}
                 {isDropdownOpen && (
                   <div className="absolute top-12 md:top-auto right-0 z-10 bg-white border border-gray-200 rounded shadow-md">
                     <ul onClick={() => setIsDropdownOpen(false)}>
@@ -68,10 +73,21 @@ const Header = () => {
             </>
           )}
           {(isLoggedIn || isAdminLoggedIn) && <LogoutButton isAdmin={isAdminLoggedIn} />}
+          {/* Dark mode toggle button */}
+          <ThemeToggle mode={mode} toggleMode={toggleMode} />
         </div>
       </div>
     </div>
   );
 }
+
+const ThemeToggle = ({ mode, toggleMode }: { mode: 'light' | 'dark'; toggleMode: () => void }) => (
+  <Tooltip title={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+    <IconButton onClick={toggleMode} color="inherit">
+      {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+    </IconButton>
+  </Tooltip>
+);
+
 
 export default Header;
