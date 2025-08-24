@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GuestInfoFormData, RoomType } from "../../../../types/types";
 import { useEffect, useState } from "react";
 import * as apiClient from "../../api-client";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 
 type Props = {

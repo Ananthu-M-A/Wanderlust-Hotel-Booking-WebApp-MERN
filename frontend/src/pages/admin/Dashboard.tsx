@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import * as apiClient from "../../api-client";
 import DashboardChart from '../../components/charts/DashboardChart';
 import { SearchBookingResponse } from '../../../../types/types';

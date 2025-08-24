@@ -5,7 +5,7 @@ import * as apiClient from "../../api-client";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FoodItem, HotelType, OpeningHour, PaymentData, RestaurantType, RoomType } from "../../../../types/types";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useAppContext } from "../../contexts/AppContext";
 import { FoodItems } from "../../../../types/Enums";
 

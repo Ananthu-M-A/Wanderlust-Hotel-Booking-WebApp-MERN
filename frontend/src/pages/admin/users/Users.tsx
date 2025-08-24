@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from '../../../api-client';
 import { useEffect, useState } from "react";
 import Pagination from "../../../components/search/filters/Pagination";

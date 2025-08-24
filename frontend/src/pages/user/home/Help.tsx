@@ -2,7 +2,7 @@ import io, { Socket } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import '../../../index.css';
 import ChatWindow from '../../../components/ChatWindow';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import * as apiClient from '../../../api-client';
 import { UserType } from '../../../../../types/types';
 

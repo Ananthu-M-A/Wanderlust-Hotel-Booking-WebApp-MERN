@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from '../../api-client';
 import { useAdminContext } from "../../contexts/AdminContext";
 import { useLocation, useNavigate } from "react-router-dom";

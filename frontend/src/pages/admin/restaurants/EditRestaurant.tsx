@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import * as apiClient from "../../../api-client";
 import { useAppContext } from "../../../contexts/AppContext";

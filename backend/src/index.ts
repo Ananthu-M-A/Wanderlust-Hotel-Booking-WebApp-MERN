@@ -29,7 +29,6 @@ import restaurantsRouter from './routes/restaurants.route';
 import bookingsRouter from './routes/bookings.route';
 
 
-// Winston logger setup
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
@@ -38,7 +37,6 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    // You can add file transports here
   ],
 });
 
@@ -57,11 +55,10 @@ const app = express();
 const server = http.createServer(app);
 messageSocket(server);
 
-// Security middleware
 app.use(helmet());
 app.use(rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
 }));

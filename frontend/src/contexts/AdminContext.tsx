@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Toast from "../components/Toast";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import * as apiClient from '../api-client';
 import { ToastMessage } from "../../../types/types";
 
@@ -20,9 +20,11 @@ export const AdminContextProvider = ({
 }) => {
     const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
 
-    const { isError } = useQuery("validateAdminToken", apiClient.validateAdminToken, {
+    const { isError } = useQuery({
+        queryKey: ["validateAdminToken"],
+        queryFn: apiClient.validateAdminToken,
         retry: false
-    })
+    });
 
     return (
         <AdminContext.Provider value={{
