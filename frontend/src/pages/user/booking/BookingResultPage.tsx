@@ -7,7 +7,7 @@ const BookingResultPage = () => {
   const search = useSearchContext();
   useEffect(()=>{
     search.clearSearchValues();
-  },[]);
+  },[ search ]);
   return (
     <div className="flex items-center justify-center">
       <div className="max-w-md p-8 bg-gray-200 border border-slate-300 shadow-lg rounded-lg">

@@ -102,6 +102,6 @@ function ChatWindow({ socket, name, roomId }: Props) {
             </div>
         </div >
     );
-};
+}
 
 export default ChatWindow;

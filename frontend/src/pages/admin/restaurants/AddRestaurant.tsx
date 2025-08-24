@@ -8,9 +8,9 @@ const AddRestaurant = () => {
     const { showToast } = useAppContext();
     const navigate = useNavigate();
 
-    const { mutate, isLoading } = useMutation(apiClient.addRestaurant, {
+    const { mutate, isPending } = useMutation({
+        mutationFn: apiClient.addRestaurant,
         onSuccess: () => {
-            
             showToast({ message: "Restaurant Added!", type: "SUCCESS" });
             navigate('/admin/restaurants');
         },
@@ -24,7 +24,9 @@ const AddRestaurant = () => {
         mutate(restaurantFormData);
     }
 
-    return (<ManageRestaurantForm onSave={handleSave} isLoading={isLoading} />)
+    return (
+        <ManageRestaurantForm onSave={handleSave} isLoading={isPending} />
+    );
 }
 
 export default AddRestaurant;

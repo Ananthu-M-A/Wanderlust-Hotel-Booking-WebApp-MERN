@@ -8,7 +8,8 @@ const AddHotel = () => {
     const { showToast } = useAppContext();
     const navigate = useNavigate();
 
-    const { mutate, isLoading } = useMutation(apiClient.addHotel, {
+    const { mutate, isPending } = useMutation({
+        mutationFn: apiClient.addHotel,
         onSuccess: () => {
             showToast({ message: "Hotel Added!", type: "SUCCESS" });
             navigate('/admin/hotels');
@@ -23,7 +24,9 @@ const AddHotel = () => {
         mutate(hotelFormData);
     }
 
-    return (<ManageHotelForm onSave={handleSave} isLoading={isLoading} />)
+    return (
+        <ManageHotelForm onSave={handleSave} isLoading={isPending} />
+    );
 }
 
 export default AddHotel;

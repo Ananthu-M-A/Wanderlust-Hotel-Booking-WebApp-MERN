@@ -8,28 +8,36 @@ const EditHotel = () => {
     const { hotelId } = useParams();
     const { showToast } = useAppContext();
     const navigate = useNavigate();
-    const { data: hotel } = useQuery("loadHotelById",
-        () => apiClient.loadHotelById(hotelId || ''), {
-        enabled: !!hotelId,
-    }
-    );
 
-    const { mutate, isLoading } = useMutation(apiClient.updateHotelById, {
+    const { data: hotel } = useQuery({
+        queryKey: ["loadHotelById", hotelId],
+        queryFn: () => apiClient.loadHotelById(hotelId || ""),
+        enabled: !!hotelId,
+    });
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: apiClient.updateHotelById,
         onSuccess: () => {
             showToast({ message: "Hotel Updated!", type: "SUCCESS" });
-            navigate('/admin/hotels');
+            navigate("/admin/hotels");
         },
         onError: () => {
             showToast({ message: "Error updating hotel", type: "ERROR" });
-            navigate('/admin/hotels');
-        }
+            navigate("/admin/hotels");
+        },
     });
 
     const handleSave = (hotelFormData: FormData) => {
         mutate(hotelFormData);
-    }
+    };
 
-    return <ManageHotelForm hotel={hotel} onSave={handleSave} isLoading={isLoading} />
-}
+    return (
+        <ManageHotelForm
+            hotel={hotel}
+            onSave={handleSave}
+            isLoading={isPending}
+        />
+    );
+};
 
 export default EditHotel;

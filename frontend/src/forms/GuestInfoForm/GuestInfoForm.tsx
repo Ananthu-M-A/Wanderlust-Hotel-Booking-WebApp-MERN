@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import * as apiClient from "../../api-client";
 import { useMutation } from "@tanstack/react-query";
 
-
 type Props = {
     hotelId: string;
     roomTypes: RoomType[];
@@ -16,12 +15,12 @@ type Props = {
 
 const GuestInfoForm = ({ hotelId, roomTypes }: Props) => {
     const search = useSearchContext();
-    const { showToast } = useAppContext();
+    const { showToast, isLoggedIn } = useAppContext();
     const [totalCost, setTotalCost] = useState<number>(0);
-    const [roomAvailability, setRoomAvailability] = useState<number>(0)
-    const { isLoggedIn } = useAppContext();
+    const [roomAvailability, setRoomAvailability] = useState<number>(0);
     const navigate = useNavigate();
     const location = useLocation();
+
     const { watch, register, handleSubmit, setValue, formState: { errors } } = useForm<GuestInfoFormData>({
         defaultValues: {
             checkIn: search.checkIn,
@@ -42,29 +41,28 @@ const GuestInfoForm = ({ hotelId, roomTypes }: Props) => {
     const adultCount = watch("adultCount");
     const childCount = watch("childCount");
 
-    const nightsPerStay = Math.floor((checkOut.getTime() - checkIn.getTime()) / (24 * 60 * 60 * 1000));
+    const nightsPerStay = checkIn && checkOut
+        ? Math.floor((checkOut.getTime() - checkIn.getTime()) / (24 * 60 * 60 * 1000))
+        : 0;
 
     useEffect(() => {
-        roomTypes.forEach(room => {
-            if (room.type === roomType) {
-                setValue("roomPrice", room.price);
-                setRoomAvailability(room.quantity);
-            }
-        });
+        const selectedRoom = roomTypes.find(r => r.type === roomType);
+        if (selectedRoom) {
+            setValue("roomPrice", selectedRoom.price);
+            setRoomAvailability(selectedRoom.quantity);
+        }
 
-        if (checkIn && checkOut && roomCount && roomPrice && nightsPerStay) {            
+        if (checkIn && checkOut && roomCount && roomPrice && nightsPerStay) {
             const newTotalCost = roomCount * nightsPerStay * roomPrice;
             setTotalCost(newTotalCost);
         }
 
         search.saveSearchValues("", checkIn, checkOut, adultCount, childCount, roomType, roomCount, roomPrice, totalCost);
-
-    }, [checkIn, checkOut, roomType, roomCount, roomPrice, nightsPerStay]);
+    }, [checkIn, checkOut, roomType, roomCount, roomPrice, nightsPerStay, totalCost, setValue]);
 
     const checkInMinDate = new Date();
     checkInMinDate.setDate(checkInMinDate.getDate() + 1);
-    const checkOutMinDate = new Date(checkIn);
-    checkOutMinDate.setDate(checkOutMinDate.getDate() + 1);
+    const checkOutMinDate = checkIn ? new Date(checkIn.getTime() + 24 * 60 * 60 * 1000) : new Date();
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 1);
 
@@ -73,24 +71,18 @@ const GuestInfoForm = ({ hotelId, roomTypes }: Props) => {
         navigate("/login", { state: { from: location } });
     }
 
-    const { mutate } = useMutation(apiClient.createCheckoutSession, {
-        onSuccess: () => {
-            showToast({ message: "Booking Saved!", type: "SUCCESS" });
-        },
+    const { mutateAsync } = useMutation({
+        mutationFn: apiClient.createCheckoutSession,
+        onSuccess: () => showToast({ message: "Booking Saved!", type: "SUCCESS" }),
         onError: (error) => {
-            if(error instanceof Error){
-                console.log(error.message, error)
-            }
+            if (error instanceof Error) console.error(error.message, error);
             showToast({ message: "Current Requirement unavailable", type: "ERROR" });
         }
-    })
+    });
 
     const onSubmit = async () => {
-        const paymentData = {
-            checkIn, checkOut, adultCount, childCount, roomType, roomCount, roomPrice,
-            hotelId, nightsPerStay
-        }
-        mutate(paymentData);
+        const paymentData = { checkIn, checkOut, adultCount, childCount, roomType, roomCount, roomPrice, hotelId, nightsPerStay };
+        await mutateAsync(paymentData);
     }
 
     return (
@@ -122,15 +114,13 @@ const GuestInfoForm = ({ hotelId, roomTypes }: Props) => {
                         <label className="items-center flex">
                             Adults:
                             <input type="number" min={1} max={20} {...register("adultCount", {
-                                required: "This feild is required", min: { value: 1, message: "There must be atleast one adult" }, valueAsNumber: true
+                                required: "This field is required", min: { value: 1, message: "At least one adult" }, valueAsNumber: true
                             })}
                                 className="w-full p-1 focus:outline-none font-bold" />
                         </label>
                         <label className="items-center flex">
                             Children:
-                            <input type="number" min={0} max={20} {...register("childCount", {
-                                valueAsNumber: true,
-                            })}
+                            <input type="number" min={0} max={20} {...register("childCount", { valueAsNumber: true })}
                                 className="w-full p-1 focus:outline-none font-bold" />
                         </label>
                         {errors.adultCount && (
@@ -140,59 +130,31 @@ const GuestInfoForm = ({ hotelId, roomTypes }: Props) => {
                     <div className="flex bg-white px-2 py-1 gap-2">
                         <label className="items-center flex">
                             Room:
-                            <select className="p-2 focus:outline-none font-bold"  {...register("roomType")} onChange={(e) => {
-                                const selectedRoomType = e.target.value;
-                                const selectedRoom = roomTypes.find(roomType => roomType.type === selectedRoomType);
+                            <select className="p-2 focus:outline-none font-bold" {...register("roomType")} onChange={(e) => {
+                                const selectedRoom = roomTypes.find(rt => rt.type === e.target.value);
                                 if (selectedRoom) {
                                     setValue("roomType", selectedRoom.type);
                                     setValue("roomPrice", selectedRoom.price || 0);
-                                    setValue("roomCount", 1)
+                                    setValue("roomCount", 1);
                                 }
                             }}>
                                 <option value="">Select Type</option>
-                                {roomTypes.map((roomType, index) => (
-                                    (roomType.price !== 0) &&
-                                    <option key={index} value={roomType.type}>{roomType.type}</option>
-                                ))}
+                                {roomTypes.map((rt, idx) => (rt.price !== 0 && <option key={idx} value={rt.type}>{rt.type}</option>))}
                             </select>
-
                         </label>
                         <label className="items-center flex">
                             Count:
-                            <input type="number" min={1} max={roomAvailability} {...register("roomCount", {
-                                valueAsNumber: true
-                            })}
+                            <input type="number" min={1} max={roomAvailability} {...register("roomCount", { valueAsNumber: true })}
                                 className="w-full p-1 focus:outline-none font-bold" />
                         </label>
                     </div>
-
-
-                    {/* Number of Rooms:
-                    {roomTypes.map((roomType, index) => (
-                        <div className="flex flex-grid bg-white px-2 py-1 gap-2 justify-between">
-                            <label className="flex items-center">
-                                <h6 key={index}>{roomType.type} Bed Room</h6>
-                            </label>
-                            <label className="flex items-center">
-                                <span className="mr-2">Count:</span>
-                                <input
-                                    type="number"
-                                    min={0}
-                                    max={roomType.currentAvailability}
-                                    defaultValue={0}
-                                    className="w-full p-1 focus:outline-none font-bold"
-                                />
-                            </label>
-                        </div>
-                    ))} */}
-
-                    <button className={`mx-auto px-10 rounded-md bg-blue-400 text-xl font-semibold text-white flex items-center p-2 hover:bg-blue-500`}>
+                    <button className="mx-auto px-10 rounded-md bg-blue-400 text-xl font-semibold text-white flex items-center p-2 hover:bg-blue-500">
                         {isLoggedIn ? 'Book Now' : 'Log in to Book'}
                     </button>
                 </div>
             </form>
         </div>
-    )
+    );
 };
 
-export default GuestInfoForm
+export default GuestInfoForm;

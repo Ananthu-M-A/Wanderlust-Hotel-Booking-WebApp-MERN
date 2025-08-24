@@ -8,28 +8,36 @@ const EditRestaurant = () => {
     const { restaurantId } = useParams();
     const { showToast } = useAppContext();
     const navigate = useNavigate();
-    const { data: restaurant } = useQuery("loadRestaurantById",
-        () => apiClient.loadRestaurantById(restaurantId || ''), {
-        enabled: !!restaurantId,
-    }
-    );
 
-    const { mutate, isLoading } = useMutation(apiClient.updateRestaurantById, {
+    const { data: restaurant } = useQuery({
+        queryKey: ["loadRestaurantById", restaurantId],
+        queryFn: () => apiClient.loadRestaurantById(restaurantId || ""),
+        enabled: !!restaurantId,
+    });
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: apiClient.updateRestaurantById,
         onSuccess: () => {
             showToast({ message: "Restaurant Updated!", type: "SUCCESS" });
-            navigate('/admin/restaurants');
+            navigate("/admin/restaurants");
         },
         onError: () => {
             showToast({ message: "Error updating restaurant", type: "ERROR" });
-            navigate('/admin/restaurants');
-        }
+            navigate("/admin/restaurants");
+        },
     });
 
     const handleSave = (restaurantFormData: FormData) => {
         mutate(restaurantFormData);
-    }
+    };
 
-    return <ManageRestaurantForm restaurant={restaurant} onSave={handleSave} isLoading={isLoading} />
-}
+    return (
+        <ManageRestaurantForm
+            restaurant={restaurant}
+            onSave={handleSave}
+            isLoading={isPending}
+        />
+    );
+};
 
 export default EditRestaurant;
