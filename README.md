@@ -20,17 +20,19 @@ Wanderlust is a dynamic platform for easily booking hotels and restaurants.  It 
 
 ## Features
 
-- Hotel and Restaurant Reservations
-- User Account Management
-- Secure Payment Processing
-- Real-time Availability
-- Chatbot Support
-- Live Chat Support
-- Search, Filter, and Sort Functionality
+- Hotel & Restaurant Reservations with real-time availability
+- User Authentication & Account Management (JWT + Bcrypt + Crypto)
+- Secure Payment Integration via Stripe
+- Customer Support: Chatbot (React Chatbotify) + Live Chat (Socket.IO)
+- Advanced Search, Filter & Sort
+- Interactive Maps Integration (Google Maps API)
+- Analytics Dashboard (Chart.js + React-Chartjs-2)
+- Date Selection (React Datepicker)
+- Invoice Generation (PDFKit & Cloudinary)
 
 ## Tech Stack
 
-- **Frontend:** React.js, TypeScript, Tailwind CSS
+- **Frontend:** React.js, TypeScript, Tailwind CSS, Framer Motion, MUI
 - **Backend:** Node.js, Express.js, MongoDB
 - **Payment:** Stripe
 - **Authentication:** JWT, Crypto, Bcrypt
