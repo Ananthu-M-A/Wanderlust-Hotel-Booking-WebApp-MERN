@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import * as apiClient from '../../../api-client';
 import { useEffect, useState, useCallback } from "react";
@@ -8,7 +8,6 @@ import ConfirmModal from "../../../components/ConfirmModal";
 const Restaurants = () => {
     const [searchData, setSearchData] = useState("");
     const [page, setPage] = useState<number>(1);
-    const queryClient = useQueryClient();
     const [showModal, setShowModal] = useState(false);
     const [restaurantId, setRestaurantId] = useState("");
     const [blockStatus, setBlockStatus] = useState(false);
@@ -29,14 +28,14 @@ const Restaurants = () => {
     const blockRestaurant = useMutation({
         mutationFn: apiClient.blockRestaurant,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["loadRestaurants"] });
+            refetch();
         },
     });
 
     const unblockRestaurant = useMutation({
         mutationFn: apiClient.unblockRestaurant,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["loadRestaurants"] });
+            refetch();
         },
     });
 
