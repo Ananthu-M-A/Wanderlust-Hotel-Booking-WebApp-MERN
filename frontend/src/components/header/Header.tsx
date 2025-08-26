@@ -3,10 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAppContext } from "../../contexts/AppContext";
 import { useAdminContext } from "../../contexts/AdminContext";
 import { useEffect, useState } from "react";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { IconButton, Tooltip } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import "../../index.css";
 import LogoutButton from "./LogoutButton";
 import * as apiClient from "../../api-client";
@@ -25,17 +21,9 @@ const Header = () => {
   };
 
   useEffect(() => {}, [user]);
-  const activeClassNameProp = { activeClassName: "active-link" };
 
-  const { mode, toggleMode } = useThemeContext();
   return (
-    <div
-      className={
-        mode === "dark"
-          ? "bg-gray-900 py-4 top-0 z-50"
-          : "bg-gray-200 py-4 top-0 z-50"
-      }
-    >
+    <div className="w-full bg-white shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
         <div className="flex items-center gap-2">
           <Link
@@ -73,7 +61,9 @@ const Header = () => {
                         <NavLink
                           to="/admin/dashboard"
                           className={({ isActive }) =>
-                            isActive ? "active-link px-4 py-2 hover:bg-gray-100" : "px-4 py-2 hover:bg-gray-100"
+                            isActive
+                              ? "active-link px-4 py-2 hover:bg-gray-100"
+                              : "px-4 py-2 hover:bg-gray-100"
                           }
                         >
                           Dashboard
@@ -83,7 +73,9 @@ const Header = () => {
                         <NavLink
                           to="/admin/bookings"
                           className={({ isActive }) =>
-                            isActive ? "active-link px-4 py-2 hover:bg-gray-100" : "px-4 py-2 hover:bg-gray-100"
+                            isActive
+                              ? "active-link px-4 py-2 hover:bg-gray-100"
+                              : "px-4 py-2 hover:bg-gray-100"
                           }
                         >
                           Bookings
@@ -93,7 +85,9 @@ const Header = () => {
                         <NavLink
                           to="/admin/hotels"
                           className={({ isActive }) =>
-                            isActive ? "active-link px-4 py-2 hover:bg-gray-100" : "px-4 py-2 hover:bg-gray-100"
+                            isActive
+                              ? "active-link px-4 py-2 hover:bg-gray-100"
+                              : "px-4 py-2 hover:bg-gray-100"
                           }
                         >
                           Hotels
@@ -103,7 +97,9 @@ const Header = () => {
                         <NavLink
                           to="/admin/restaurants"
                           className={({ isActive }) =>
-                            isActive ? "active-link px-4 py-2 hover:bg-gray-100" : "px-4 py-2 hover:bg-gray-100"
+                            isActive
+                              ? "active-link px-4 py-2 hover:bg-gray-100"
+                              : "px-4 py-2 hover:bg-gray-100"
                           }
                         >
                           Restaurants
@@ -113,7 +109,9 @@ const Header = () => {
                         <NavLink
                           to="/admin/users"
                           className={({ isActive }) =>
-                            isActive ? "active-link px-4 py-2 hover:bg-gray-100" : "px-4 py-2 hover:bg-gray-100"
+                            isActive
+                              ? "active-link px-4 py-2 hover:bg-gray-100"
+                              : "px-4 py-2 hover:bg-gray-100"
                           }
                         >
                           Users
@@ -126,7 +124,6 @@ const Header = () => {
               <NavLink
                 className="px-4 py-2 cursor-pointer text-black font-semibold hover:bg-gray-100"
                 to="/admin/chat"
-                {...activeClassNameProp}
               >
                 Chat
               </NavLink>
@@ -167,28 +164,10 @@ const Header = () => {
           {(isLoggedIn || isAdminLoggedIn) && (
             <LogoutButton isAdmin={isAdminLoggedIn} />
           )}
-          {/* Dark mode toggle button */}
-          <ThemeToggle mode={mode} toggleMode={toggleMode} />
         </div>
       </div>
     </div>
   );
 };
-
-const ThemeToggle = ({
-  mode,
-  toggleMode,
-}: {
-  mode: "light" | "dark";
-  toggleMode: () => void;
-}) => (
-  <Tooltip
-    title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-  >
-    <IconButton onClick={toggleMode} color="inherit">
-      {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-    </IconButton>
-  </Tooltip>
-);
 
 export default Header;

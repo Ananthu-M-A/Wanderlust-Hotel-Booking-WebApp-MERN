@@ -7,7 +7,6 @@ import { AppContextProvider } from './contexts/AppContext.tsx';
 import { SearchContextProvider } from './contexts/SearchContext.tsx';
 import { AdminContextProvider } from './contexts/AdminContext.tsx';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeContextProvider } from './contexts/ThemeContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +21,6 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeContextProvider>
           <AppContextProvider>
             <AdminContextProvider>
               <SearchContextProvider>
@@ -30,7 +28,6 @@ root.render(
               </SearchContextProvider>
             </AdminContextProvider>
           </AppContextProvider>
-        </ThemeContextProvider>
       </QueryClientProvider>
     </HelmetProvider>
   </React.StrictMode>

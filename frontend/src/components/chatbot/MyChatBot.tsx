@@ -4,8 +4,15 @@ import "react-chatbotify/dist/react-chatbotify.css";
 import * as apiClient from "../../api-client";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FoodItem, HotelType, OpeningHour, PaymentData, RestaurantType, RoomType } from "../../../../types/types";
-import { useMutation } from "@tanstack/react-query";
+import {
+  FoodItem,
+  HotelType,
+  OpeningHour,
+  PaymentData,
+  RestaurantType,
+  RoomType,
+} from "../../../../types/types";
+import { useMutation } from "@tanstack/react-query"; // ✅ Correct for v5+
 import { useAppContext } from "../../contexts/AppContext";
 import { FoodItems } from "../../../../types/Enums";
 
@@ -21,8 +28,8 @@ const MyChatBot = () => {
     return tomorrow;
   });
   const [checkOut, setCheckOut] = useState<Date>(() => {
-    const nextDay = new Date(checkIn);
-    nextDay.setDate(nextDay.getDate() + 1);
+    const nextDay = new Date();
+    nextDay.setDate(checkIn.getDate() + 1);
     return nextDay;
   });
   const [dateOfBooking, setDateOfBooking] = useState<Date>(() => {
@@ -40,14 +47,16 @@ const MyChatBot = () => {
   const [restaurantId, setRestaurantId] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [error, setError] = useState<string>("");
+
   const { showToast } = useAppContext();
+
   let roomPrice = 0,
     foodPrice = 0,
     foodCount = 0,
     total = 0;
 
   useEffect(() => {
-    return () => { };
+    return () => {};
   }, []);
 
   const checkInMinDate = new Date();
@@ -57,12 +66,13 @@ const MyChatBot = () => {
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
 
-  const { mutate } = useMutation(apiClient.createCheckoutSession, {
-    onMutate: (newPaymentData) => {
-      return newPaymentData;
-    },
-    onSuccess: () => {
+  const { mutate } = useMutation({
+    mutationFn: apiClient.createCheckoutSession,
+    onSuccess: (session: any) => {
       showToast({ message: "Booking Saved!", type: "SUCCESS" });
+      if (session?.url) {
+        window.location.assign(session.url);
+      }
     },
     onError: () => {
       setError("Requirement unavailable");
@@ -70,10 +80,9 @@ const MyChatBot = () => {
     },
   });
 
-  const handlePayment = async (paymentData: PaymentData) => {
+  const handlePayment = (paymentData: PaymentData) => {
     try {
-      const response = mutate(paymentData);
-      console.log("Response:", response);
+      mutate(paymentData);
     } catch (error) {
       console.error("Mutation Error:", error);
     }

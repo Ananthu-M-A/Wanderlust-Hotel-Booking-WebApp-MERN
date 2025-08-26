@@ -22,7 +22,7 @@ const bookingSchema = new mongoose.Schema<BookingType>({
         foodCount: { type: Number },
     },
     totalCost: { type: Number, required: true },
-    paymentId: { type: String, required: true },
+    paymentId: { type: String, required: false },
     bookingDate: { type: Date, required: true },
     bookingStatus: { type: String },
     cancellationDate: { type: Date }
