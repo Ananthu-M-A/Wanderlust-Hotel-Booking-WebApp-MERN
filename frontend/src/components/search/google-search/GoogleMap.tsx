@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
 
 interface ChildProps {
+  searchInput: string;
+  onInputChange: (value: string) => void;
   sendDataToParent: (data: string[], place: string) => void;
 }
+
 
 type Props = ChildProps;
 
