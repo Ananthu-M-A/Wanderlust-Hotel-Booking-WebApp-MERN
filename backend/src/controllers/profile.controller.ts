@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
-import { UserType } from "../../../types/types";
+import { UserType } from "../types/types";
 import bcrypt from 'bcryptjs';
 import { uploadImage } from "../utils/CloudinaryUploader";
 

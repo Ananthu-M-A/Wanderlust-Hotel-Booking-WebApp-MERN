@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Hotel from '../models/hotel.model';
-import { HotelType, RoomType, SearchHotelResponse } from '../../../types/types';
+import { HotelType, RoomType, SearchHotelResponse } from '../types/types';
 import { uploadImages } from '../utils/CloudinaryUploader';
 import { constructSearchHotelQuery } from '../utils/SearchQuery';
 

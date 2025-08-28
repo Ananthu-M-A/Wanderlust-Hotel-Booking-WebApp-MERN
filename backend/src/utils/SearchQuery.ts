@@ -1,4 +1,4 @@
-import { BookingBotSearchParams, HotelSearchParams, UserSearchParams } from "../../../types/types";
+import { BookingBotSearchParams, HotelSearchParams, UserSearchParams } from "../types/types";
 
 export const constructSearchHotelQuery = (queryParams: HotelSearchParams) => {
     const searchQuery: any = {};

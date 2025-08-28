@@ -1,5 +1,5 @@
 import PDFKit from 'pdfkit';
-import { BookingType, HotelType, RestaurantType, UserType } from '../../../types/types';
+import { BookingType, HotelType, RestaurantType, UserType } from '../types/types';
 
 export const createPDF = (newBooking: BookingType, user: UserType, hotel?: HotelType, restaurant?: RestaurantType): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

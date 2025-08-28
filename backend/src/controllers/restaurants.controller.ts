@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { FoodItem, OpeningHour, RestaurantType, SearchRestaurantResponse } from '../../../types/types';
+import { FoodItem, OpeningHour, RestaurantType, SearchRestaurantResponse } from '../types/types';
 import Restaurant from '../models/restaurant.model';
 import { uploadImages } from '../utils/CloudinaryUploader';
 import { bookingBotSearchQuery } from '../utils/SearchQuery';

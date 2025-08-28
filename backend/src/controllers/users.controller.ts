@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
-import { SearchUserResponse } from "../../../types/types";
+import { SearchUserResponse } from "../types/types";
 import { constructSearchQuery } from "../utils/SearchQuery";
 
 export const loadUsers = async (req: Request, res: Response) => {

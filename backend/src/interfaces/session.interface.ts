@@ -1,5 +1,5 @@
 import { SessionData } from 'express-session';
-import { BookingType } from '../../../types/types';
+import { BookingType } from '../types/types';
 import { Request } from 'express';
 
 declare global {

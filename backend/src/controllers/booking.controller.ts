@@ -4,7 +4,7 @@ import Booking from "../models/booking.model";
 import Hotel from "../models/hotel.model";
 import User from "../models/user.model";
 import { sendBookingMail } from '../utils/NodeMailer';
-import { BookingType } from "../../../types/types";
+import { BookingType } from "../types/types";
 import { createPDF } from "../utils/PDF Creator";
 import { createBookingMail } from "../utils/BookingMailCreator";
 import { Attachment } from "nodemailer/lib/mailer";

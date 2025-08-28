@@ -1,4 +1,4 @@
-import { BookingType, HotelType, RestaurantType, UserType } from "../../../types/types";
+import { BookingType, HotelType, RestaurantType, UserType } from "../types/types";
 import { Request, Response } from "express";
 import "dotenv/config";
 

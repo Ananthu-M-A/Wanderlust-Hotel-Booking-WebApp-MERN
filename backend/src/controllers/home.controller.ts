@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Hotel from "../models/hotel.model";
-import { SearchHotelResponse, SearchRestaurantResponse } from "../../../types/types";
+import { SearchHotelResponse, SearchRestaurantResponse } from "../types/types";
 import Restaurant from "../models/restaurant.model";
 import { validationResult } from "express-validator";
 import { bookingBotSearchQuery, constructSearchHotelQuery } from "../utils/SearchQuery";

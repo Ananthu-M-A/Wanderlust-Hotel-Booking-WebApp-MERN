@@ -1,5 +1,5 @@
 import mongoose, { Types } from "mongoose";
-import { BookingType } from "../../../types/types";
+import { BookingType } from "../types/types";
 
 const bookingSchema = new mongoose.Schema<BookingType>({
     userId: { type: Types.ObjectId, ref: "User", required: true },
