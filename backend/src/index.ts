@@ -27,6 +27,7 @@ import usersRouter from './routes/users.route';
 import hotelsRouter from './routes/hotels.route';
 import restaurantsRouter from './routes/restaurants.route';
 import bookingsRouter from './routes/bookings.route';
+import mongoose from 'mongoose';
 
 
 const logger = winston.createLogger({
@@ -40,7 +41,11 @@ const logger = winston.createLogger({
   ],
 });
 
-connectDb();
+mongoose.connection.on("disconnected", () => {
+  console.warn("⚠️ MongoDB disconnected, retrying...");
+  connectDb();
+});
+
 const MongoDBStoreSession = MongoDBStore(session);
 const store = new MongoDBStoreSession({
   uri: process.env.MONGODB_CONNECTION_STRING as string,
