@@ -87,8 +87,6 @@ app.use(session({
   store: store
 }));
 
-
-// Swagger setup
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -114,8 +112,6 @@ app.use("/api/admin/hotels", hotelsRouter);
 app.use("/api/admin/restaurants", restaurantsRouter);
 app.use("/api/admin/bookings", bookingsRouter);
 
-
-// Centralized error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   logger.error(err);
   res.status(err.status || 500).json({
