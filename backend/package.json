@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/pdfkit": "^0.13.7",
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.5.1",
     "connect-mongodb-session": "^5.0.0",
     "connect-redis": "^8.0.1",
@@ -43,7 +43,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
+    "@types/bcryptjs": "^3.0.0",
     "@types/connect-mongodb-session": "^2.4.7",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
